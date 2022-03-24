@@ -1,0 +1,157 @@
+	// Ignacio Portas >> 259779 << 
+	// Disculpa la identacion, lo hice todo en un block de notas.
+
+Ejercicio 1 )
+ 
+ public static String cueva(int[][] matriz){
+    	String retorno = "" ;
+        boolean estalactitas = false;
+        boolean estalagmitas = false;
+        boolean caminoCortado = false;
+        // Recorremos la matriz por columnas primero (j=columnas, i=filas)
+        for (int j = 0; j < mat[0].length; j++){
+            int cantPiedras = 0;
+            for (int i = 0; i < mat.length; i++){
+				cantPiedras += 1;
+				
+				// Hay que chequear si no tenemos aire en el medio, 
+				// Hay piedras arriba y piedras abajo pero aire en el medio
+				if (mat[i][j] == 0 && i > 0 && i < mat.length-1){ //notable para no irse de range
+                	 	       if (mat[i-1][j] == 1 && mat[i+1][j] == 1){
+                        		  caminoCortado = true;
+                					    }
+            							    }
+            }
+            
+            // Chequeamos si hubo alguna piedra y si el camino no fue cortado en el medio
+            if(cantPiedras > 0 && !caminoCortado){
+                if (mat[0][j] == 1 && mat[mat.length-1][j] == 0){
+                    estalactitas = true;
+                }
+                if (mat[0][j] == 0 && mat[mat.length-1][j] == 1){
+                    estalagmitas = true;
+                }
+            }
+        }
+        
+        if (estalactitas && !estalagmitas){
+            retorno = "estalactitas ";
+        }else if(!estalactitas && estalagmitas){
+            retorno = "estalagmitas ";
+        }else if(estalactitas && estalagmitas){
+            retorno = "ambas";
+        }else{
+            retorno = "nada";
+        }
+    }
+ 	return retorno;    
+}
+
+Ejercicio 2 ) 
+		
+   public static void ubicarCaballos(String nombreArchivo, String nombreResultado){
+
+		int matriz[][] = new int[8][8];
+		ArchivoLectura ar = new ArchivoLectura("nombreArchivo");
+	        ArchivoGrabacion ag = new ArchivoGrabacion("nombreResultado");
+		while (ar.hayMasLineas()) {
+		String linea[] = ar.linea().split("#");
+		int fila = Integer.parseInt(linea[0]);
+		int columna = Integer.parseInt(linea[1]);
+		String color = linea[2];
+		//Cargo la matriz segun las posiciones dadas, 1 es que hay un caballo,sino dejo un 0 por defecto
+		for(int i = 0; i < matriz.length ; i++){
+			for(int j = 0; j <matriz[0].length;j++){
+			if( i == fila && j == columna){
+				matriz[i][j] = 1;	
+			}			
+                        
+
+			}
+			}
+	
+
+                 }
+		ar.cerrar();
+		boolean tableroValido=false;
+		for(int i = 0;i < matriz.length; i++){
+			for(int j = 0; j<matriz[0].length; j++){
+			if(matriz[i][j] == 1){
+			  	// tengo que validar que i + 2 o i -2   e j + 2 o j - 2 esten entre 0 y de matriz.length
+				if((i+2 < matriz.length) && (i-2 > 0) && (j+2 < matriz[0].length) && (j-2 > 0){
+				if(matriz[i+2][j+1]==1 && matriz[i+1][j+2]==1 && matriz[i-1][j-2]==1 && matriz[i-2][j-1]==1 && matriz[i-2][j+1]==1 && matriz[i-1][j+2]==1 && matriz[i+2][j-1]==1 && matriz[i+1][j-2]==1)
+				tableroValido=false;
+
+				
+				}
+			}
+		}
+	}
+   		if(tableroValido){
+                     ag.grabarLinea("valido");
+					}
+	
+	       else{
+		 ag.grabarLinea("no valido");
+		}		
+	     ag.cerrar();	
+}
+Ejercicio 3 )
+	
+	
+	Sistema modelo;
+	
+	public Ventana(Sistema unModelo){
+	modelo= unModelo;
+	initComponents();
+	listaTecnicos.setListData(modelo.getListaTecnicos().toArray());
+	listaClientes.setListData(modelo.getListaClientes().toArray());
+
+	//En clase persona
+	//Agrego metodo metodo ToString para en lista visualizar nombre anteriormente.
+	 @Override
+         public String toString() {
+        	return this.getNombre();
+         }
+
+	
+	Evento:click botonRegistrar
+	
+	Tecnico t = (Tecnico)lListaTecnicos.getSelectedValue();
+        Cliente c = (Cliente)ListaClientes.getSelectedValue();
+	int costo= Integer.parseInt(cajaCosto.getText());
+        String Datos= Integer.parseInt(CajaDatosReceta.getText());
+        Receta r = new Compra(t,c,costo,datos);
+        this.modelo.getListaReceta.add(r);
+	double muestro = promedioRecetas(c);
+	promedio.setText(muestro + "");
+	
+
+	private double promedioRecetas(Cliente c){
+		double promedio = 0; 
+		int cantidadRecetas = 0;
+        	double montoTotal = 0 
+		Iterator<Receta> it = this.ListaRecetas.iterator();
+       		 while (it.hasNext()) {
+           	 Receta r = it.next();
+            		if(r.getCliente().equals(c)){
+               	 	 cantidadRecetas++;
+                	 montoTotal += c.getPrecio();
+            			} 	
+	
+		  promedio = montoTotal/cantidadRecetas;	
+		  return promedio;
+	}
+
+
+	En sistema
+
+	public ArrayList<Clientes> ordenRecetas(Receta unaReceta){
+	
+	
+	
+	
+	}
+
+	
+	
